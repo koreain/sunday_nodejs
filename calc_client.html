@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h2>웹 계산기</h2>
+    <input type="text" id="num1">
+    <input type="text" id="num2">
+    <select id="oper">
+        <option value="plus">plus</option>
+        <option value="minus">minus</option>
+        <option value="mult">mult</option>
+        <option value="div">div</option>
+    </select>
+    <input type="button" id="btn" value="확인">
+    <hr>
+    <div id="result"> 결과 =></div>
+    
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script>
+        $('#btn').click(function(){
+           var url = "http://localhost:3000";
+           var num1 = $("#num1").val();
+           var num2 = $("#num2").val();
+           var oper = $("#oper").val();
+            
+           url+= "/"+oper+"/"+num1+"/"+num2;
+            //Ajax 로 rul요청
+           var xhr = new XMLHttpRequest();
+           //console.log(xhr)
+           
+           // 관제센터
+           xhr.onreadystatechange = function(){
+               if(this.status==200 && this.readyState==4){
+                   console.log(this.responseText);
+                   $("#result").html("result: "+this.responseText);
+               };
+           };
+           xhr.open("GET", url, true); //준비
+           xhr.send(); //보내기
+        });
+    </script>
+</body>
+</html>
