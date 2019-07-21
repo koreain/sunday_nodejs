@@ -1,0 +1,53 @@
+<!--sunday01ex14_callback2.html-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>박스 움직이기</title>
+    <style>
+        div#box {
+            border: 1px solid red;
+            background: yellow;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 300px;
+        }
+    </style>
+    <script>
+        var move = function(target, dest, callback){
+            var box = document.querySelector(target)
+            //console.dir(box);
+            
+            box.callback = callback;
+            
+            //box.style.background = 'green';
+            //box.style.left = 100px;
+            var x = 0;
+            var fn = setInterval(function(){
+                x+=3;
+                box.style.left = x + 'px';
+                if(x >= dest){
+                    clearInterval(fn);
+                    
+                    box.callback();
+                }
+            },1000/30)
+        };
+        
+        window.onload = function(){
+            move('#box', 200, function(){
+                //alert('작업완료');
+                this.style.background = 'blue';
+                
+                console.log(this);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="box">Box</div>
+    
+</body>
+</html>
